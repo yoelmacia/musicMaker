@@ -3,8 +3,7 @@
     <div class="Title">Music Maker</div>
     <div class="Profile">
       <button @click="getData()">List Songs</button>
-      <div>Artist Picture</div>
-      <div>Artist Name</div>
+      <Profile :songs="this.songs"></Profile>
     </div>
     <div class="Gallery">Gallery</div>
   </div>
@@ -13,9 +12,12 @@
 <script>
 const BASEURL = "https://api-stg.jam-community.com/song/trending";
 import songs from "./assets/songs.json";
+import Profile from "./components/Profile.vue";
 export default {
   name: "app",
-  components: {},
+  components: {
+    Profile
+  },
   data() {
     return {
       songs: null
