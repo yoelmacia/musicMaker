@@ -2,7 +2,7 @@
   <div id="app">
     <div class="Title">Music Maker</div>
     <div class="Profile">
-      <button>List Songs</button>
+      <button @click="getData()">List Songs</button>
       <div>Artist Picture</div>
       <div>Artist Name</div>
     </div>
@@ -11,9 +11,34 @@
 </template>
 
 <script>
+const BASEURL = "https://api-stg.jam-community.com/song/trending";
+import songs from "./assets/songs.json";
 export default {
   name: "app",
-  components: {}
+  components: {},
+  data() {
+    return {
+      songs: null
+    };
+  },
+  methods: {
+    receiveData() {
+      fetch(BASEURL, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }).then(response => {
+        // JSON responses are automatically parsed.
+        this.songs = response.data;
+        console.log(response);
+      });
+    },
+    getData() {
+      this.songs = songs;
+    }
+  }
 };
 </script>
 
