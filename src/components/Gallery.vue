@@ -1,10 +1,19 @@
 <template>
   <div>
-    <div class="gallery" v-for="(item, index) in songs" :key="index">
+    <div
+      @click="playSong(item.music_file_path)"
+      class="gallery"
+      v-for="(item, index) in songs"
+      :key="index"
+    >
       <img :src="item.cover_image_path" class="gallery-image" />
       <p class="gallery-name">{{ item.name }}</p>
-      <button class="gallery-play" @click="playSong(item.music_file_path)">Play</button>
-      <button class="gallery-pause" @click="playSong(item.music_file_path)">Pause</button>
+      <div class="track-play">
+        <div class="track-inner">
+          <div v-if="url === item.music_file_path">||</div>
+          <div v-else>&#9654;</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,21 +76,40 @@ export default {
   color: black;
   position: absolute;
   bottom: 41px;
-}
-.gallery-play {
-  width: 250px;
-  text-align: center;
-  background-color: white;
-  color: black;
-  position: absolute;
-  bottom: 28px;
-}
-.gallery-pause {
-  width: 250px;
-  text-align: center;
-  background-color: white;
-  color: black;
-  position: absolute;
   bottom: 0;
+}
+.track-play {
+  width: 250px;
+  height: 250px;
+}
+
+.track-inner {
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  background-color: black;
+  border-radius: 30px;
+  width: 60px;
+  height: 60px;
+  color: white;
+  padding-top: 13px;
+  margin-left: 95px;
+  margin-top: 95px;
+  opacity: 0;
+}
+
+.track-inner:hover {
+  opacity: 0.8;
+  animation-name: fade-in;
+  animation-duration: 0.5ms;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
+  }
 }
 </style>
