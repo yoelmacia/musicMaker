@@ -5,7 +5,9 @@
       <button @click="getData()">List Songs</button>
       <Profile :songs="this.songs"></Profile>
     </div>
-    <div class="Gallery">Gallery</div>
+    <div class="Gallery">
+      <Gallery :songs="this.songs"></Gallery>
+    </div>
   </div>
 </template>
 
@@ -13,10 +15,12 @@
 const BASEURL = "https://api-stg.jam-community.com/song/trending";
 import songs from "./assets/songs.json";
 import Profile from "./components/Profile.vue";
+import Gallery from "./components/Gallery.vue";
 export default {
   name: "app",
   components: {
-    Profile
+    Profile,
+    Gallery
   },
   data() {
     return {
@@ -39,6 +43,7 @@ export default {
     },
     getData() {
       this.songs = songs;
+      console.log(this.songs);
     }
   }
 };
