@@ -1,24 +1,30 @@
 <template>
   <div>
-    <div
-      @click="playSong(item.music_file_path)"
-      class="gallery"
-      v-for="(item, index) in songs"
-      :key="index"
-    >
-      <img :src="item.cover_image_path" class="gallery-image" />
-      <p class="gallery-name">{{ item.name }}</p>
-      <div class="track-play">
-        <div class="track-inner">
-          <div v-if="url === item.music_file_path">||</div>
-          <div v-else>&#9654;</div>
+    <div class="gallery" v-for="(item, index) in songs" :key="index">
+      <div @click="playSong(item.music_file_path)">
+        <img :src="item.cover_image_path" class="gallery-image" />
+        <p class="gallery-name">{{ item.name }}</p>
+        <div class="track-play">
+          <div class="track-inner">
+            <div v-if="url === item.music_file_path">||</div>
+            <div v-else>&#9654;</div>
+          </div>
         </div>
+      </div>
+      <div>
+        <div>Likes: {{ item.likes }}</div>
+      </div>
+      <div>
+        <button @click="likeSong(item.id)">Like</button>
+        <button>Comment</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+const LIKEURL =
+  "https://api-stg.jam-community.com/interact/like?apikey=___agAFTxkmMIWsmN9zOpM_6l2SkZPPy21LGRlxhYD8";
 export default {
   props: ["songs"],
   data: function() {
@@ -48,6 +54,23 @@ export default {
           this.audio = song;
         }
       }
+    },
+    likeSong(song) {
+      fetch(LIKEURL, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "http://www.jam.dev",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: { id: song }
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
@@ -75,7 +98,6 @@ export default {
   background-color: white;
   color: black;
   position: absolute;
-  bottom: 41px;
   bottom: 0;
 }
 .track-play {
