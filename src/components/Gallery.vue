@@ -16,8 +16,8 @@
         <div>Comments: {{ item.comments }}</div>
       </div>
       <div>
-        <button @click="likeSongLocalData(index, item.id, item.likes)">Like</button>
-        <button @click="commentSongLocalData(index, item.id, commentText, item.comments )">Comment</button>
+        <button @click="likeSongLocalData(index)">Like</button>
+        <button @click="commentSongLocalData(index, item.id, commentText )">Comment</button>
         <input v-model="commentText[index]" type="text" placeholder="Comment here" maxlength="32" />
       </div>
     </div>
@@ -86,7 +86,7 @@ export default {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: { id: song, type: "song", message: comment[0] }
+        body: { id: song, type: "song", message: commentText[0] }
       })
         .then(response => {
           // Update the songs doing another GET request
@@ -97,11 +97,11 @@ export default {
           console.log(error);
         });
     },
-    likeSongLocalData(index, id, likes) {
+    likeSongLocalData(index) {
       // The API post request needs id, comment, text, just add one to the counter to show.
       this.songs[index].likes += 1;
     },
-    commentSongLocalData(index, id, commentText, comments) {
+    commentSongLocalData(index, id, commentText) {
       // The API post request needs id, comment, text, just add one to the counter to show.
       if (commentText[0] !== undefined) {
         this.songs[index].comments += 1;
