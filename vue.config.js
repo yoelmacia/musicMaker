@@ -1,3 +1,5 @@
-export const devServer = {
-  proxy: "http://jam.dev"
+module.export = {
+  devServer: {
+    proxy: "https://api-stg.jam-community.com"
+  }
 };

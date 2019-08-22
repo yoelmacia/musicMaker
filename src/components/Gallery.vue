@@ -13,17 +13,19 @@
       </div>
       <div>
         <div>Likes: {{ item.likes }}</div>
+        <div>Comments: {{ item.comments }}</div>
       </div>
       <div>
         <button @click="likeSong(item.id)">Like</button>
-        <button>Comment</button>
+        <button @click="commentSong(item.id, commentText)">Comment</button>
+        <input v-model="commentText[index]" type="text" placeholder="Comment here" maxlength="32" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-const LIKEURL =
+const BASEURL =
   "https://api-stg.jam-community.com/interact/like?apikey=___agAFTxkmMIWsmN9zOpM_6l2SkZPPy21LGRlxhYD8";
 export default {
   props: ["songs"],
@@ -31,7 +33,8 @@ export default {
     return {
       audio: null,
       playing: false,
-      url: ""
+      url: "",
+      commentText: []
     };
   },
   methods: {
@@ -56,14 +59,32 @@ export default {
       }
     },
     likeSong(song) {
-      fetch(LIKEURL, {
+      fetch(BASEURL, {
         method: "POST",
         mode: "cors",
         headers: {
-          "Access-Control-Allow-Origin": "http://www.jam.dev",
+          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: { id: song }
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    commentSong(song, comment) {
+      this.commentText = [];
+      fetch(BASEURL, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: { id: song, type: "song", message: comment[0] }
       })
         .then(response => {
           console.log(response);
