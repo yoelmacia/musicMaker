@@ -40,7 +40,6 @@ export default {
     },
     getData() {
       this.songs = songs;
-      console.log(this.songs);
     }
   }
 };

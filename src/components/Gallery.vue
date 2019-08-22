@@ -16,8 +16,8 @@
         <div>Comments: {{ item.comments }}</div>
       </div>
       <div>
-        <button @click="likeSong(item.id)">Like</button>
-        <button @click="commentSong(item.id, commentText)">Comment</button>
+        <button @click="likeSongLocalData(index, item.id, item.likes)">Like</button>
+        <button @click="commentSongLocalData(index, item.id, commentText, item.comments )">Comment</button>
         <input v-model="commentText[index]" type="text" placeholder="Comment here" maxlength="32" />
       </div>
     </div>
@@ -26,7 +26,7 @@
 
 <script>
 const BASEURL =
-  "https://api-stg.jam-community.com/interact/like?apikey=___agAFTxkmMIWsmN9zOpM_6l2SkZPPy21LGRlxhYD8";
+  "https://localhost:8080/interact/like?apikey=___agAFTxkmMIWsmN9zOpM_6l2SkZPPy21LGRlxhYD8";
 export default {
   props: ["songs"],
   data: function() {
@@ -69,13 +69,15 @@ export default {
         body: { id: song }
       })
         .then(response => {
+          // Update the songs doing another GET request
           console.log(response);
         })
         .catch(error => {
+          // Catch if there is an error
           console.log(error);
         });
     },
-    commentSong(song, comment) {
+    commentSong(song, commentText) {
       this.commentText = [];
       fetch(BASEURL, {
         method: "POST",
@@ -87,11 +89,25 @@ export default {
         body: { id: song, type: "song", message: comment[0] }
       })
         .then(response => {
+          // Update the songs doing another GET request
           console.log(response);
         })
         .catch(error => {
+          // Catch if there is an error
           console.log(error);
         });
+    },
+    likeSongLocalData(index, id, likes) {
+      // The API post request needs id, comment, text, just add one to the counter to show.
+      this.songs[index].likes += 1;
+    },
+    commentSongLocalData(index, id, commentText, comments) {
+      // The API post request needs id, comment, text, just add one to the counter to show.
+      if (commentText[0] !== undefined) {
+        this.songs[index].comments += 1;
+      } else {
+        alert("Fill the comment input");
+      }
     }
   }
 };
