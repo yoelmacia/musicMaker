@@ -1,29 +1,27 @@
 # music-maker
 
-## Project setup
+This is a code test to create an application to use the API of JAM, a company that does magic with music.
+
+## To install the application once downloaded
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### To run the application once everything is installed
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Overview
 
-### Run your tests
-```
-npm run test
-```
+The application is made with Vue CLI 3, so it will run on the localhost port:8080. 
 
-### Lints and fixes files
-```
-npm run lint
-```
+The use of APIs could not be possible because the use of CORS by the server has been impossible to make GET or POST requests with that header. 
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+So I made the app with local data taken from "https://api-stg.jam-community.com/song/trending".
+
+A test should be added to check the functionality of all requests.
+
+I created the Profile component on the assumption that I had to put information about the artist, but in the end it is unnecessary.
+
+Hope you enjoy! :D
